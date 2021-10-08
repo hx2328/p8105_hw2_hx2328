@@ -132,4 +132,30 @@ The pols mainly contains the year, month, and the political status of the presid
 The merged dataset has dimension `r nrow(merged_data)` * `r ncol(merged_data)`. The range of years is `r range(merged_data$year)`. The names of the key variables include: `r colnames(merged_data)`.
 
 
+# Problem 3
+
+Read data and clean the variable name
+
+```{r}
+popular_names = read_csv("Popular_Baby_Names.csv") %>% 
+  janitor::clean_names()
+```
+
+Check if there are changes of the names of a categorical predictor and the case structure of string variables.
+
+```{r}
+table(popular_names$year_of_birth) #good
+table(popular_names$gender)#good
+table(popular_names$ethnicity)#detected some changes
+```
+
+Address the problem and omit duplicate rows:
+
+```{r}
+popular_names_clean = mutate(popular_names, ethnicity = recode(ethnicity, 
+                                                               "ASIAN AND PACI" = "ASIAN AND PACIFIC ISLANDER",
+                                                               "BLACK NON HISP" = "BLACK NON HISPANIC",
+                                                               "WHITE NON HISP" = "WHITE NON HISPANIC")) %>% 
+  unique()
+```
 
