@@ -182,3 +182,13 @@ rownames(male_table) = c("ASIAN AND PACIFIC ISLANDER", "BLACK NON HISPANIC", "HI
 as.table(male_table)
 ```
 
+Finally, got the scatter plot for male, white non-hispanic children born in 2016, show the number of children with a name against the rank in popularity of that name.
+
+```{r}
+male_white = filter(popular_names_clean, gender == "MALE", ethnicity == "WHITE NON HISPANIC",
+                    year_of_birth == 2016)
+ggplot(male_white, aes(x = rank, y = count)) + geom_point() + xlab("The rank in popularity of that name") + 
+  ylab("The number of children with a name")
+ggsave("scatter_plot.pdf", height = 4, width = 6)
+```
+
