@@ -66,8 +66,34 @@ pols_month = read_csv("fivethirtyeight_datasets/pols-month.csv") %>%
   mutate(month = month.name[as.numeric(month)]) %>% 
   mutate(president = prez_dem,
          president = recode(president, `1` = "dem", `0` = "gop"),
-         president = factor(president)) %>% 
+         president = factor(president),
+         year = as.numeric(year)) %>% 
   select(-day, -prez_gop, -prez_dem)
+```
+
+Read and clean snp.csv data.
+
+```{r}
+snp = read_csv("fivethirtyeight_datasets/snp.csv") %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  mutate(month = month.name[as.numeric(month)],
+         year = as.numeric(year))
+
+#There is something wrong with the date format when I read the csv file. The year variable is 2 digit instead of 4, so did some modifications.
+for (i in 1:787){
+  if (snp$year[i] <= 15){
+    snp$year[i] = snp$year[i] + 2000
+  }
+  else{
+    snp$year[i] = snp$year[i] + 1900
+  }
+}
+
+snp = select(snp, -day) %>% 
+  arrange(year, month) %>% 
+  relocate(year, month)
+
+  
 ```
 
 
