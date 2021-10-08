@@ -159,3 +159,26 @@ popular_names_clean = mutate(popular_names, ethnicity = recode(ethnicity,
   unique()
 ```
 
+Produce the "Olivia" as female baby name rank table.
+
+```{r}
+olivia_female = filter(popular_names_clean, gender == "FEMALE", childs_first_name == "Olivia") %>% 
+  select(ethnicity, year_of_birth, rank) %>% 
+  arrange(ethnicity, year_of_birth)
+olivia_table = matrix(olivia_female$rank, ncol = 4)
+colnames(olivia_table) = c(2013, 2014, 2015, 2016)
+rownames(olivia_table) = c("ASIAN AND PACIFIC ISLANDER", "BLACK NON HISPANIC", "HISPANIC", "WHITE NON HISPANIC")
+as.table(olivia_table)
+```
+
+Produce another table showing the most famous male name over the time.
+
+```{r}
+male_name = filter(popular_names_clean, gender == "MALE", rank == 1) %>% 
+  arrange(year_of_birth)
+male_table = matrix(male_name$childs_first_name, ncol = 6)
+colnames(male_table) = c(2011:2016)
+rownames(male_table) = c("ASIAN AND PACIFIC ISLANDER", "BLACK NON HISPANIC", "HISPANIC", "WHITE NON HISPANIC")
+as.table(male_table)
+```
+
