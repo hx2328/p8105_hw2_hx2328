@@ -34,3 +34,10 @@ precip_2019 = read_excel("Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet = 4,
   mutate(year = 2019)
 ```
 
+Combine precipitation dataset and convert month to a character variable
+
+```{r}
+precip_data = bind_rows(precip_2018, precip_2019) %>% 
+  mutate(month = month.name[month])
+```
+
