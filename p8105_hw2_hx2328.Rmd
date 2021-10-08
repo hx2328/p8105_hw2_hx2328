@@ -118,5 +118,18 @@ unemployment = read_csv("fivethirtyeight_datasets/unemployment.csv") %>%
                         ))
 ```
 
+Merge data:
+
+```{r}
+merged_data = left_join(pols_month, snp) %>% 
+  left_join(unemployment)
+```
+
+The snp contains year, month, and the closing values of the S&P stock index;
+
+The pols mainly contains the year, month, and the political status of the president.
+
+The merged dataset has dimension `r nrow(merged_data)` * `r ncol(merged_data)`. The range of years is `r range(merged_data$year)`. The names of the key variables include: `r colnames(merged_data)`.
+
 
 
