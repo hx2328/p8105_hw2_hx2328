@@ -79,7 +79,8 @@ snp = read_csv("fivethirtyeight_datasets/snp.csv") %>%
   mutate(month = month.name[as.numeric(month)],
          year = as.numeric(year))
 
-#There is something wrong with the date format when I read the csv file. The year variable is 2 digit instead of 4, so did some modifications.
+#There is something wrong with the date format when I read the csv file. 
+#The year variable is 2 digit instead of 4, so did some modifications by loop.
 for (i in 1:787){
   if (snp$year[i] <= 15){
     snp$year[i] = snp$year[i] + 2000
@@ -92,10 +93,30 @@ for (i in 1:787){
 snp = select(snp, -day) %>% 
   arrange(year, month) %>% 
   relocate(year, month)
-
-  
 ```
 
+Read and clean the unemployment.csv data.
+
+```{r}
+unemployment = read_csv("fivethirtyeight_datasets/unemployment.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(year = as.numeric(year)) %>% 
+  pivot_longer(jan:dec, names_to = "month", values_to = "percentage_unemployment") %>% 
+  mutate(month = recode(month,
+                        "jan" = "January",
+                        "feb" = "February",
+                        "mar" = "March",
+                        "apr" = "April",
+                        "may" = "May",
+                        "jun" = "June",
+                        "jul" = "July",
+                        "aug" = "August",
+                        "sep" = "September",
+                        "oct" = "October",
+                        "nov" = "November",
+                        "dec" = "December"
+                        ))
+```
 
 
 
