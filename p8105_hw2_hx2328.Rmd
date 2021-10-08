@@ -55,5 +55,21 @@ The total precipitation in 2018 would be `r sum(total_2018$total)`.
 The median number of sports balls in 2019 would be `r median(sports_balls_2019$sports_balls)`
 
 
+# Problem 2
+
+Read and clean pols-month.csv data.
+
+```{r}
+pols_month = read_csv("fivethirtyeight_datasets/pols-month.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(mon, into = c("year", "month", "day"), sep = "-") %>% 
+  mutate(month = month.name[as.numeric(month)]) %>% 
+  mutate(president = prez_dem,
+         president = recode(president, `1` = "dem", `0` = "gop"),
+         president = factor(president)) %>% 
+  select(-day, -prez_gop, -prez_dem)
+```
+
+
 
 
