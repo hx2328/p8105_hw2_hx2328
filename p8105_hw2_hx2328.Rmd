@@ -41,3 +41,19 @@ precip_data = bind_rows(precip_2018, precip_2019) %>%
   mutate(month = month.name[month])
 ```
 
+The key variables in the Mr. Trash Wheel are the weight_towns, and the month and year. We could find the relationship between the weight of trash and precipitation amount.
+
+If we calculate the total precipitation in 2018 and median number of sports balls in 2019:
+
+```{r}
+total_2018 = filter(precip_data, year == 2018)
+sports_balls_2019 = filter(trash_wheel_clean, year == 2019)
+```
+
+The total precipitation in 2018 would be `r sum(total_2018$total)`.
+
+The median number of sports balls in 2019 would be `r median(sports_balls_2019$sports_balls)`
+
+
+
+
